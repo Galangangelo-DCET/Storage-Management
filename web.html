@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inventory Management</title>
+    <link rel="stylesheet" href="web.css">
+</head>
+<body>
+    <header>
+        <img src="logo.jpg" alt="Inventory Logo" class="logo">
+        <h1>Inventory Management</h1>
+    </header>
+    <div class="container">
+        <div class="input-section">
+            <input type="text" id="itemName" placeholder="Item Name">
+            <input type="number" id="itemQuantity" placeholder="Quantity">
+            <button onclick="addItem()">Add Item</button>
+        </div>
+        <div class="sort-section">
+            <label for="sort">Sort By:</label>
+            <select id="sort" onchange="sortItems()">
+                <option value="name">Name</option>
+                <option value="quantity">Quantity</option>
+            </select>
+        </div>
+        <ul id="inventoryList"></ul>
+    </div>
+    <script>
+        let inventory = [];
+
+        function addItem() {
+            const name = document.getElementById("itemName").value.trim();
+            const quantity = parseInt(document.getElementById("itemQuantity").value);
+            
+            if (name && quantity > 0) {
+                inventory.push({ name, quantity });
+                displayItems();
+            }
+        }
+
+        function displayItems() {
+            const list = document.getElementById("inventoryList");
+            list.innerHTML = "";
+            inventory.forEach(item => {
+                const li = document.createElement("li");
+                li.textContent = `${item.name} - Quantity: ${item.quantity}`;
+                list.appendChild(li);
+            });
+        }
+
+        function sortItems() {
+            const criteria = document.getElementById("sort").value;
+            if (criteria === "name") {
+                inventory.sort((a, b) => a.name.localeCompare(b.name));
+            } else if (criteria === "quantity") {
+                inventory.sort((a, b) => a.quantity - b.quantity);
+            }
+            displayItems();
+        }
+    </script>
+</body>
+</html>
