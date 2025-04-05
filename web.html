@@ -8,56 +8,37 @@
 </head>
 <body>
     <header>
-        <img src="logo.jpg" alt="Inventory Logo" class="logo">
-        <h1>Inventory Management</h1>
+        <div class="header-left">
+            <img src="logo.jpg" alt="Logo" class="logo">
+            <h1>Inventory Management System</h1>
+        </div>
+        <div class="search">
+            <p><b>Search: </b><input class="srch" type="text" placeholder="Search Item"><a href="#"><button class="btn">Search</button></a></p>                    
+        </div>
     </header>
     <div class="container">
         <div class="input-section">
             <input type="text" id="itemName" placeholder="Item Name">
+            <input type="text" id="Details" placeholder="Details">
             <input type="number" id="itemQuantity" placeholder="Quantity">
+            <input type="number" id="Price" placeholder="Price">
             <button onclick="addItem()">Add Item</button>
+            <button onclick="cancelItem()">Cancel</button>
         </div>
         <div class="sort-section">
-            <label for="sort">Sort By:</label>
+            <label for="sort">Type:</label>
             <select id="sort" onchange="sortItems()">
                 <option value="name">Name</option>
                 <option value="quantity">Quantity</option>
+                <option value="number">Number</option>
             </select>
         </div>
-        <ul id="inventoryList"></ul>
+        <div class="range-section">
+            <label for="range">Range:</label>
+            <select id="range" onchange="sortItems()">
+                <option value="number">Number</option>
+            </select>
+        </div>  
     </div>
-    <script>
-        let inventory = [];
-
-        function addItem() {
-            const name = document.getElementById("itemName").value.trim();
-            const quantity = parseInt(document.getElementById("itemQuantity").value);
-            
-            if (name && quantity > 0) {
-                inventory.push({ name, quantity });
-                displayItems();
-            }
-        }
-
-        function displayItems() {
-            const list = document.getElementById("inventoryList");
-            list.innerHTML = "";
-            inventory.forEach(item => {
-                const li = document.createElement("li");
-                li.textContent = `${item.name} - Quantity: ${item.quantity}`;
-                list.appendChild(li);
-            });
-        }
-
-        function sortItems() {
-            const criteria = document.getElementById("sort").value;
-            if (criteria === "name") {
-                inventory.sort((a, b) => a.name.localeCompare(b.name));
-            } else if (criteria === "quantity") {
-                inventory.sort((a, b) => a.quantity - b.quantity);
-            }
-            displayItems();
-        }
-    </script>
 </body>
 </html>
